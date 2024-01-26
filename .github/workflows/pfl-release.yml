@@ -13,7 +13,14 @@ jobs:
 
       - name: Run Code
         run: |
-          echo "Executing code..."
+          git status
+          git remote -v
+          git remote add upstream git@github.com:Santonclause/tempupstream.git
+          git tag
+          git status
+          git remote -v
+          git fetch --tags
+          git tag
 
 
 
