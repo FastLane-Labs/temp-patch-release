@@ -1,0 +1,19 @@
+name: Manual Trigger Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  execute-code:
+    runs-on: pfl-main-ubuntu
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Code
+        run: |
+          echo "Executing code..."
+
+
+
