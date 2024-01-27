@@ -19,7 +19,7 @@ jobs:
           git tag
           git status
           git remote -v
-          git fetch --tags
+          git fetch upstream --tags
           git tag
 
 
