@@ -15,7 +15,7 @@ jobs:
         run: |
           git status
           git remote -v
-          git remote add upstream git@github.com:Santonclause/tempupstream.git
+          git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
           git tag
           git status
           git remote -v
