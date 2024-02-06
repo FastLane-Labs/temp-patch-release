@@ -27,9 +27,12 @@ jobs:
           origin_tag=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/${ORIGIN_PROJECT}/releases/latest" | jq -r ".tag_name")
           echo "UPSTREAM_TAG=$upstream_tag" >> "$GITHUB_OUTPUT"
           echo "ORIGIN_TAG=$origin_tag" >> "$GITHUB_OUTPUT"
+          # check if non of the tags are null and that they are different
+          [[ -z $UPSTREAM_TAG || -z $ORIGIN_TAG || $UPSTREAM_TAG == $ORIGIN_TAG ]] && exit 1
 
 
       - name: Print vars
+        if: success()
         run: |
           echo "Upstream: ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
           echo "Origin: ${{ steps.check-upstream-tags.outputs.ORIGIN_TAG }}
@@ -46,9 +49,9 @@ jobs:
     #       release=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/Santonclause/tempupstream/releases/latest" | jq -r ".tag_name")
     #       echo $release
 
-    #   - name: Check version
-    #     run: |
-    #       echo $release
+      - name: Check version
+        run: |
+          echo ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
 
 
 
