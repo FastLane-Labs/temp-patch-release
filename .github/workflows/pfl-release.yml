@@ -14,7 +14,7 @@ jobs:
 
       - name: Run Code
         run: |
-          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
           git status
           git remote -v
           git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
