@@ -3,6 +3,10 @@ name: PFL bor create new release
 on:
   workflow_dispatch:
 
+env:
+    UPSTREAM_PROJECT: Santonclause/tempupstream
+    ORIGIN_PROJECT: FastLane-Labs/temp-patch-release
+
 jobs:
   execute-code:
     # runs-on: pfl-main-ubuntu
@@ -12,17 +16,39 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Run Code
+        
+      - name: Check upstream releases
+        # fetch latest releases from upstream and origin
+        # compare releases and set output if there is a new release found
+        # fail if releases are the same or error fetching; stop actions
+        id: check-upstream-tags
         run: |
-          #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          #git status
-          #git remote -v
-          #git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
-          #git status
-          #git remote -v
-          #git fetch upstream --tags
-          release=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/Santonclause/tempupstream/releases/latest" | jq -r ".tag_name")
-          echo $release
+          upstream_tag=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/${UPSTREAM_PROJECT}/releases/latest" | jq -r ".tag_name")
+          origin_tag=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/${ORIGIN_PROJECT}/releases/latest" | jq -r ".tag_name")
+          echo "UPSTREAM_TAG=$upstream_tag" >> "$GITHUB_OUTPUT"
+          echo "ORIGIN_TAG=$origin_tag" >> "$GITHUB_OUTPUT"
+
+
+      - name: Print vars
+        run: |
+          echo "Upstream: ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          echo "Origin: ${{ steps.check-upstream-tags.outputs.ORIGIN_TAG }}
+
+    #   - name: Run Code
+    #     run: |
+    #       #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    #       #git status
+    #       #git remote -v
+    #       #git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
+    #       #git status
+    #       #git remote -v
+    #       #git fetch upstream --tags
+    #       release=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/Santonclause/tempupstream/releases/latest" | jq -r ".tag_name")
+    #       echo $release
+
+    #   - name: Check version
+    #     run: |
+    #       echo $release
 
 
 
