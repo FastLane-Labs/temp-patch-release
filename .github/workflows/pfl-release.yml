@@ -18,11 +18,11 @@ jobs:
           git status
           git remote -v
           git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
-          git tag
           git status
           git remote -v
           git fetch upstream --tags
-          git tag
+          release=$(curl -s "https://api.github.com/repos/Santonclause/tempupstream/releases/latest" | jq -r ".tag_name")
+          echo $release
 
 
 
