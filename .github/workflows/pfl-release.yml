@@ -56,15 +56,15 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$ORIGIN_PROJECT.git
           git status
           git remote -v
-          ls -l
-          ls -l eth
-          #git apply pfl.patch
-          #rm -rf pfl.patch
-          #git add .
-          #git commit -m "apply fastlane sentry-patch"
-          #git tag -d ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
-          #git tag ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
-          #git push origin ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          #ls -l
+          #ls -l eth
+          git apply pfl.patch
+          rm -rf pfl.patch
+          git add .
+          git commit -m "apply fastlane sentry-patch"
+          git tag -d ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          git tag ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          git push origin ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
 
       - name: Check version
         run: |
