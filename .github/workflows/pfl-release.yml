@@ -58,7 +58,7 @@ jobs:
           git remote -v
           #ls -l
           #ls -l eth
-          git apply pfl.patch
+          git apply pfl.patch -vvv
           rm -rf pfl.patch
           git add .
           git commit -m "apply fastlane sentry-patch"
