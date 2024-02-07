@@ -9,7 +9,7 @@ env:
     PATCH_URL: https://github.com/FastLane-Labs/sentry-patch/blob/main/announce_only.patch
 
 jobs:
-  execute-code:
+  release-new-bor-version:
     # runs-on: pfl-main-ubuntu
     runs-on: ubuntu-latest
 
