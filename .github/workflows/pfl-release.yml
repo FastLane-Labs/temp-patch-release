@@ -6,6 +6,7 @@ on:
 env:
     UPSTREAM_PROJECT: Santonclause/tempupstream
     ORIGIN_PROJECT: FastLane-Labs/temp-patch-release
+    PATCH_URL: https://github.com/FastLane-Labs/sentry-patch/blob/main/announce_only.patch
 
 jobs:
   execute-code:
@@ -30,27 +31,28 @@ jobs:
           
           echo "UPSTREAM_TAG=$upstream_tag" >> "$GITHUB_OUTPUT"
           echo "ORIGIN_TAG=$origin_tag" >> "$GITHUB_OUTPUT"
-          # check if non of the tags are null and that they are different
+          # fail if any of the tags is null or if the tags are the same
           [[ -z $UPSTREAM_TAG || -z $ORIGIN_TAG || $UPSTREAM_TAG == $ORIGIN_TAG ]] && exit 1
 
 
-      - name: Print vars
+      - name: Print tags
         if: success()
         run: |
           echo "Upstream: ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
           echo "Origin: ${{ steps.check-upstream-tags.outputs.ORIGIN_TAG }}
 
-    #   - name: Run Code
-    #     run: |
-    #       #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-    #       #git status
-    #       #git remote -v
-    #       #git remote add upstream git@github.com:Santonclause/tempupstream.git 2>/dev/null || :
-    #       #git status
-    #       #git remote -v
-    #       #git fetch upstream --tags
-    #       release=$(curl -sL -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/Santonclause/tempupstream/releases/latest" | jq -r ".tag_name")
-    #       echo $release
+      - name: Run Code
+        run: |
+          #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          git remote add upstream git@github.com:${UPSTREAM_PROJECT}.git 2>/dev/null || :
+          git status
+          git remote -v
+          git fetch upstream --tags
+          git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          curl -o pfl.patch ${PATCH_URL}
+          cat pfl.patch
+          rm -rf pfl.patch
+          
 
       - name: Check version
         run: |
