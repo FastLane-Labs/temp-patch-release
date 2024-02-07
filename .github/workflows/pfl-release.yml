@@ -30,9 +30,6 @@ jobs:
           echo "UPSTREAM_TAG=$upstream_tag" >> "$GITHUB_OUTPUT"
           echo "ORIGIN_TAG=$origin_tag" >> "$GITHUB_OUTPUT"
           # fail if any of the tags is null or if the tags are the same
-          [[ -z $upstream_tag ]] && { echo "Got first!"; exit 1; }
-          [[ -z $origin_tag ]] && { echo "Got second!"; exit 1; }
-          [[ $upstream_tag == $origin_tag ]] && { echo "Got third!"; exit 1; }
           [[ -z $upstream_tag || -z $origin_tag || $upstream_tag == $origin_tag ]] && { echo "Check if tags are not null or not the same"; exit 1; }
           echo "Upstream: $upstream_tag"
           echo "Origin: $origin_tag"
