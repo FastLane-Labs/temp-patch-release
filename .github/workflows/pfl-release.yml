@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
         
       - name: Check upstream releases
@@ -41,18 +41,20 @@ jobs:
           echo "Upstream: ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
           echo "Origin: ${{ steps.check-upstream-tags.outputs.ORIGIN_TAG }}
 
-    #   - name: Run Code
-    #     run: |
-    #       #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-    #       git remote add upstream git@github.com:${UPSTREAM_PROJECT}.git 2>/dev/null || :
-    #       git status
-    #       git remote -v
-    #       git fetch upstream --tags
-    #       git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
-    #       curl -o pfl.patch ${PATCH_URL}
-    #       cat pfl.patch
-    #       rm -rf pfl.patch
-          
+      - name: Apply patch
+        run: |
+          # ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          git remote add upstream https://github.com/${UPSTREAM_PROJECT}.git 2>/dev/null || :
+          git config --global user.name 'GH Actions'
+          git config --global user.email 'anton.starrs@gmail.com'
+          git status
+          git remote -v
+          git fetch upstream --tags
+          git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          curl -o pfl.patch ${PATCH_URL}
+          cat pfl.patch
+          rm -rf pfl.patch
+          # git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
 
       - name: Check version
         run: |
