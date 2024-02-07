@@ -32,7 +32,7 @@ jobs:
           echo "Upstream: $upstream_tag"
           echo "Origin: $origin_tag"
           # fail if any of the tags is null or if the tags are the same
-          [[ -z $upstream_tag || -z $origin_tag || $upstream_tag == $origin_tag ]] && { echo "Check if tags are not null or not the same"; exit 1; }
+          [[ -z $upstream_tag || -z $origin_tag || $upstream_tag == $origin_tag ]] && { echo "Tags must not be null or the same"; exit 1; }
 
 
       - name: Print tags
