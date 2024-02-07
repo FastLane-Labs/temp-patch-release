@@ -6,7 +6,7 @@ on:
 env:
     UPSTREAM_PROJECT: Santonclause/tempupstream
     ORIGIN_PROJECT: FastLane-Labs/temp-patch-release
-    PATCH_URL: https://github.com/FastLane-Labs/sentry-patch/blob/main/announce_only.patch
+    PATCH_URL: https://raw.githubusercontent.com/FastLane-Labs/sentry-patch/main/announce_only.patch
 
 jobs:
   release-new-bor-version:
