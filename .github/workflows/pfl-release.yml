@@ -32,7 +32,7 @@ jobs:
           echo "UPSTREAM_TAG=$upstream_tag" >> "$GITHUB_OUTPUT"
           echo "ORIGIN_TAG=$origin_tag" >> "$GITHUB_OUTPUT"
           # fail if any of the tags is null or if the tags are the same
-          [[ -z $UPSTREAM_TAG || -z $ORIGIN_TAG || $UPSTREAM_TAG == $ORIGIN_TAG ]] && { echo "Check if tags are not null or not the same"; exit 1; }
+          [[ -z $upstream_tag || -z $origin_tag || $upstream_tag == $origin_tag ]] && { echo "Check if tags are not null or not the same"; exit 1; }
 
 
       - name: Print tags
