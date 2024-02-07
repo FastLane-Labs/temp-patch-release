@@ -1,4 +1,4 @@
-name: PFL bor create new release
+name: FastLane bor create new release
 
 on:
   workflow_dispatch:
