@@ -44,17 +44,17 @@ jobs:
           echo "Upstream: ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
           echo "Origin: ${{ steps.check-upstream-tags.outputs.ORIGIN_TAG }}
 
-      - name: Run Code
-        run: |
-          #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          git remote add upstream git@github.com:${UPSTREAM_PROJECT}.git 2>/dev/null || :
-          git status
-          git remote -v
-          git fetch upstream --tags
-          git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
-          curl -o pfl.patch ${PATCH_URL}
-          cat pfl.patch
-          rm -rf pfl.patch
+    #   - name: Run Code
+    #     run: |
+    #       #ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    #       git remote add upstream git@github.com:${UPSTREAM_PROJECT}.git 2>/dev/null || :
+    #       git status
+    #       git remote -v
+    #       git fetch upstream --tags
+    #       git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+    #       curl -o pfl.patch ${PATCH_URL}
+    #       cat pfl.patch
+    #       rm -rf pfl.patch
           
 
       - name: Check version
