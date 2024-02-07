@@ -46,15 +46,21 @@ jobs:
           # ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
           git remote add upstream https://github.com/${UPSTREAM_PROJECT}.git 2>/dev/null || :
           git config --global user.name 'GH Actions'
-          git config --global user.email 'anton.starrs@gmail.com'
+          git config --global user.email 'anton@fastlane.finance'
           git status
           git remote -v
           git fetch upstream --tags
           git checkout ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
           curl -o pfl.patch ${PATCH_URL}
-          cat pfl.patch
+          # cat pfl.patch
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$ORIGIN_PROJECT
+          git apply pfl.patch
           rm -rf pfl.patch
-          # git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git add .
+          git commit -m "apply fastlane sentry-patch"
+          git tag -d ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          git tag ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
+          git push origin ${{ steps.check-upstream-tags.outputs.UPSTREAM_TAG }}
 
       - name: Check version
         run: |
