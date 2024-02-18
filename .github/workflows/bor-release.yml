@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Invoke another action
-        uses: ./workflows/packager/packager.yml
+        uses: ./workflows/packager
 
   push_to_dockerhub:
       name: DockerHub build and push
