@@ -76,6 +76,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Print env vars
+        run: |
+          git status
+          git tag
+          ls -l
       - name: Invoke another action
         uses: ./workflows/packager
 
