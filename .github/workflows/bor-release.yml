@@ -86,11 +86,11 @@ jobs:
             git tag
             ls -l
 
-        # - name: Extract metadata for Docker
-        #   id: meta
-        #   uses: docker/metadata-action@v5
-        #   with: 
-        #     images: santonclause/testupstream
+        - name: Extract metadata for Docker
+          id: meta
+          uses: docker/metadata-action@v5
+          with: 
+            images: santonclause/testupstream
 
 
         - name: Print metadata
@@ -98,22 +98,15 @@ jobs:
             echo "Tags: ${{ steps.meta.outputs.tags }}"
             echo "Labels: ${{ steps.meta.outputs.labels }}"
 
-
-
         # - name: Print new tag in push to docker
         #   run: |
         #     echo "New tag: ${{ needs.release-new-bor-version.outputs.upstream_tag }}"
-        # - name: Log in to Docker Hub
-        #   uses: docker/login-action@v3
-        #   with:
-        #       username: ${{ secrets.DOCKER_USERNAME }}
-        #       password: ${{ secrets.DOCKER_PASSWORD }}
-
-        # - name: Extract metadata (tags, labels) for Docker
-        #   id: meta
-        #   uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        #   with: santonclause/testupstream
-        #   images: my-docker-hub-namespace/my-docker-hub-repository
+        
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v3
+          with:
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
 
         - name: Build and push Docker image
           uses: docker/build-push-action@v5
@@ -122,5 +115,5 @@ jobs:
             file: ./Dockerfile
             push: true
             tags: ${{ steps.meta.outputs.tags }}
-            labels: ${{ steps.meta.outputs.labels }}
+
 
