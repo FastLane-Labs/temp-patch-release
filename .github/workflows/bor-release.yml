@@ -80,11 +80,31 @@ jobs:
             ref: ${{ needs.release-new-bor-version.outputs.upstream_tag }}
 
 
-        - name: Print new tag in push to docker
+        - name: Print env vars
           run: |
-            echo "New tag: ${{ needs.release-new-bor-version.outputs.upstream_tag }}"
+            git status
+            git tag
+            ls -l
+
+        - name: Extract metadata for Docker
+          id: meta
+          uses: docker/metadata-action@v5
+          with: 
+            images: santonclause/testupstream
+
+
+        - name: Print metadata
+          run: |
+            echo "Tags: ${{ steps.meta.outputs.tags }}"
+            echo "Labels: ${{ steps.meta.outputs.labels }}"
+
+
+
+        # - name: Print new tag in push to docker
+        #   run: |
+        #     echo "New tag: ${{ needs.release-new-bor-version.outputs.upstream_tag }}"
         # - name: Log in to Docker Hub
-        #   uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        #   uses: docker/login-action@v3
         #   with:
         #       username: ${{ secrets.DOCKER_USERNAME }}
         #       password: ${{ secrets.DOCKER_PASSWORD }}
@@ -92,8 +112,8 @@ jobs:
         # - name: Extract metadata (tags, labels) for Docker
         #   id: meta
         #   uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        #   with:
-        #       images: my-docker-hub-namespace/my-docker-hub-repository
+        #   with: santonclause/testupstream
+        #   images: my-docker-hub-namespace/my-docker-hub-repository
 
         # - name: Build and push Docker image
         #   uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
