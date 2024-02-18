@@ -92,7 +92,7 @@ jobs:
           with: 
             images: santonclause/testupstream
             tags: |
-              type=semver,pattern={{version}}
+              type=semver,pattern=v{{version}}
 
 
         - name: Print metadata
