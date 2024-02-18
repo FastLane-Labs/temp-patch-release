@@ -73,6 +73,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release-new-bor-version]
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
       - name: test
         run: |
           echo "Tag: `echo $(git describe --tags --abbrev=0)`"
