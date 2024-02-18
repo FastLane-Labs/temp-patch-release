@@ -74,12 +74,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-new-bor-version
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      # - name: Checkout Repository
+      #   uses: actions/checkout@v4
       - name: Print env vars
         run: |
           git status
           git tag
+          ls -la ./.workflows
           ls -la ./.workflows/packager/
       - name: Invoke another action
         uses: ./.workflows/packager
