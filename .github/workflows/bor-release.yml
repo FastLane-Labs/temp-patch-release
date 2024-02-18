@@ -93,6 +93,7 @@ jobs:
             images: santonclause/testupstream
             tags: |
               type=raw,value=${{ needs.release-new-bor-version.outputs.upstream_tag }}
+              type=raw,value=latest
 
 
         - name: Print metadata
